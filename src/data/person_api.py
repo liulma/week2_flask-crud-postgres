@@ -25,8 +25,10 @@ def get_person_by_id(id):
 def create_person():
     try: 
         data = request.get_json()
-        username = data['username']
-        db_create_person(username)
+        username = data['name']
+        age = data['age']
+        student = data['student']
+        db_create_person(username, age, student)
         return {"success": "created person: %s" % username}
     except:
         return {"error": "error creating person"}
@@ -35,8 +37,10 @@ def create_person():
 def update_person(id):
     try:
         data = request.get_json()
-        username = data['username']
-        db_update_person(id, username)
+        username = data['name']
+        age = data['age']
+        student = data['student']
+        db_update_person(id, username, age, student)
         return {"success": "updated person"}
     except:
         return {"error": "error updating person"}

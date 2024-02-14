@@ -6,10 +6,11 @@ def query_person():
     try:
         con = psycopg2.connect(**config())
         cursor = con.cursor()
-        SQL = 'SELECT *FROM person;'
+        SQL = 'SELECT * FROM person;'
         cursor.execute(SQL)
-        row = cursor.fetchone()
-        print(row)
+        rows = cursor.fetchall()
+        for row in rows:
+            print(row)
         cursor.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)

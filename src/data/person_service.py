@@ -35,15 +35,15 @@ def db_get_person_by_id(id):
         if con is not None:
             con.close()
             
-def db_create_person(username):
+def db_create_person(username, age, student):
     con = None
     try:
         con = psycopg2.connect(**config())
         cursor = con.cursor(cursor_factory=RealDictCursor)
-        SQL = 'INSERT INTO person (username) VALUES (%s);'
-        cursor.execute(SQL, (username,))
+        SQL = 'INSERT INTO person (name, age, student) VALUES (%s, %s, %s);'
+        cursor.execute(SQL, (username, age, student))
         con.commit()
-        result = {"success": "created person username: %s " % username}
+        result = {"success": "created person name: %s " % username}
         cursor.close()
         return json.dumps(result)
     except (Exception, psycopg2.DatabaseError) as error:
@@ -52,13 +52,13 @@ def db_create_person(username):
         if con is not None:
             con.close()
 
-def db_update_person(id, username):
+def db_update_person(id, username, age, student):
     con = None
     try:
         con = psycopg2.connect(**config())
         cursor = con.cursor(cursor_factory=RealDictCursor)
-        SQL = 'UPDATE person SET username = %s WHERE id = %s;'
-        cursor.execute(SQL, (username, id))
+        SQL = 'UPDATE person SET name = %s, age = %s, student = %s WHERE id = %s;'
+        cursor.execute(SQL, (username, age, student, id))
         con.commit()
         cursor.close()
         result = {"success": "updated person id: %s " % id}
