@@ -6,12 +6,15 @@ cd flask-crud-postgres
 # Create a new database and table and insert demo data
     CREATE DATABASE RESTAPIDEMO;
 
-    CREATE TABLE person(
-        id SERIAL PRIMARY KEY,
-        username VARCHAR(255)
+    create table person (
+        id serial primary key,
+        name varchar(100),
+        age int,
+        student boolean
     );
 
-    INSERT INTO person (username) VALUES ('Test User');
+
+    insert into person (name, age, student) values ('Alice', 20, true);
 
 # Crete database.ini file to src/data/database.ini path.
     [postgresql]
@@ -31,6 +34,5 @@ cd flask-crud-postgres
     pip install -r requirements.txt
 
 ## Start server
-    cd src\data
-    py person_api.py
+    python src\data\person_api.py
 
