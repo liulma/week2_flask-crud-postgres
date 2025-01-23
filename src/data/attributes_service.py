@@ -68,3 +68,20 @@ def db_update_attribute(id, attribute_name, attribute_description, attribute_val
     finally:
         if con is not None:
             con.close()
+
+def db_delete_attribute(id):
+    con = None
+    try:
+        con = psycopg2.connect(**config())
+        cursor = con.cursor(cursor_factory=RealDictCursor)
+        SQL = 'DELETE FROM attributes WHERE id = %s;'
+        cursor.execute(SQL, (id,))
+        con.commit()
+        cursor.close()
+        result = {"success": "deleted attribute id: %s " % id}
+        return json.dumps(result)
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if con is not None:
+            con.close()

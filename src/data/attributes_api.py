@@ -1,5 +1,5 @@
 from flask import Flask, request
-from attributes_service import db_get_attributes, db_get_attribute_by_id, db_create_attribute, db_update_attribute
+from attributes_service import db_get_attributes, db_get_attribute_by_id, db_create_attribute, db_update_attribute, db_delete_attribute
 
 app = Flask(__name__)
 
@@ -43,9 +43,16 @@ def update_attribute(id):
         attribute_value = data['attribute_value']
         person_id = data['person_id']
         db_update_attribute(id, attribute_name, attribute_description, attribute_value, person_id)
-        return {"success": "updated person"}
+        return {"success": "updated attribute"}
     except:
-        return {"error": "error updating person"}
+        return {"error": "error updating attribute"}
+    
+@app.route('/attributes/<int:id>', methods=['DELETE'])
+def delete_attribute(id):
+    try:
+        return db_delete_attribute(id)
+    except:
+        return {"error": "no such attribute"}
     
 if __name__ == "__main__":
     app.run()
